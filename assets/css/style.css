@@ -1,0 +1,127 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.login-body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+}
+
+.login-card {
+    background: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+}
+
+.login-header {
+    background: #0d6efd;
+    color: #ffffff;
+    text-align: center;
+    padding: 28px 20px;
+}
+
+.login-header h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.login-header p {
+    margin: 6px 0 0;
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+.login-body-card {
+    padding: 30px;
+}
+
+.login-body-card h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #212529;
+    text-align: center;
+}
+
+.login-subtitle {
+    text-align: center;
+    color: #6c757d;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #343a40;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+.btn-login {
+    width: 100%;
+    background: #0d6efd;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-login:hover {
+    background: #0b5ed7;
+}
+
+.alert {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+}
+
+.login-info {
+    text-align: center;
+    margin-top: 18px;
+    color: #6c757d;
+}
