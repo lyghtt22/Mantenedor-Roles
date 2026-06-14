@@ -125,3 +125,21 @@ body {
     margin-top: 18px;
     color: #6c757d;
 }
+.app-main {
+    min-height: calc(100vh - 100px);
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+}
+
+.brand-image {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
