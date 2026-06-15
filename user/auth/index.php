@@ -5,6 +5,7 @@ session_start();
 require_once __DIR__ . '/../../config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['error']['login'] = 'Acceso no permitido.';
     header('Location: ../login/');
     exit();
 }
@@ -23,18 +24,24 @@ try {
     $stmt->execute([$usuario]);
     $user = $stmt->fetch();
 
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['usuario'] = $user['usuario'];
-
-        unset($_SESSION['error']);
-
-        header('Location: ../../backoffice/');
+    if (!$user) {
+        $_SESSION['error']['login'] = 'Usuario o contraseña incorrectos.';
+        header('Location: ../login/');
         exit();
     }
 
-    $_SESSION['error']['login'] = 'Usuario o contraseña incorrectos.';
-    header('Location: ../login/');
+    if (!password_verify($password, $user['password'])) {
+        $_SESSION['error']['login'] = 'Usuario o contraseña incorrectos.';
+        header('Location: ../login/');
+        exit();
+    }
+
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['usuario'] = $user['usuario'];
+
+    unset($_SESSION['error']['login']);
+
+    header('Location: ../../backoffice/');
     exit();
 
 } catch (Exception $e) {

@@ -2,10 +2,8 @@
 
 session_start();
 
-/* Limpiar todas las variables de sesión */
 $_SESSION = [];
 
-/* Eliminar la cookie de sesión si existe */
 if (ini_get('session.use_cookies')) {
     $params = session_get_cookie_params();
 
@@ -20,9 +18,7 @@ if (ini_get('session.use_cookies')) {
     );
 }
 
-/* Destruir la sesión */
 session_destroy();
 
-/* Redirigir al login */
 header('Location: ../login/');
 exit();

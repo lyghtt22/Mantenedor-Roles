@@ -1,15 +1,20 @@
 <?php
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
+
     echo json_encode([
         'success' => false,
         'message' => 'No autorizado. Debe iniciar sesión.'
     ]);
+
     exit();
 }
 
@@ -17,10 +22,12 @@ require_once __DIR__ . '/../../config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
+
     echo json_encode([
         'success' => false,
         'message' => 'Método no permitido.'
     ]);
+
     exit();
 }
 
@@ -30,14 +37,20 @@ $id = intval($input['id'] ?? 0);
 
 if ($id <= 0) {
     http_response_code(400);
+
     echo json_encode([
         'success' => false,
         'message' => 'ID inválido.'
     ]);
+
     exit();
 }
 
 try {
+    if (!isset($pdo)) {
+        throw new Exception('La conexión $pdo no existe. Revisa config/db.php');
+    }
+
     $sqlBuscar = "SELECT id, activo 
                   FROM roles 
                   WHERE id = :id 
@@ -47,21 +60,23 @@ try {
     $stmtBuscar->bindParam(':id', $id, PDO::PARAM_INT);
     $stmtBuscar->execute();
 
-    $rol = $stmtBuscar->fetch();
+    $rol = $stmtBuscar->fetch(PDO::FETCH_ASSOC);
 
     if (!$rol) {
         http_response_code(404);
+
         echo json_encode([
             'success' => false,
             'message' => 'Rol no encontrado.'
         ]);
+
         exit();
     }
 
     $nuevoEstado = $rol['activo'] == 1 ? 0 : 1;
 
-    $sqlActualizar = "UPDATE roles 
-                      SET activo = :activo 
+    $sqlActualizar = "UPDATE roles
+                      SET activo = :activo
                       WHERE id = :id";
 
     $stmtActualizar = $pdo->prepare($sqlActualizar);
@@ -80,6 +95,7 @@ try {
 
     echo json_encode([
         'success' => false,
-        'message' => 'Error al cambiar el estado del rol.'
+        'message' => 'Error al cambiar el estado del rol.',
+        'error' => $e->getMessage()
     ]);
 }
